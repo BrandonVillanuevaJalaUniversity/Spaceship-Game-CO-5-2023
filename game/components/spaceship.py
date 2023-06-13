@@ -27,10 +27,14 @@ class Spaceship:
     def move_left(self):
         if self.rect.left >0:
             self.rect.x -= 10
+        else:
+            self.rect.right = SCREEN_WIDTH
     
     def move_right(self):
         if self.rect.right <SCREEN_WIDTH:
             self.rect.x += 10
+        else:
+            self.rect.left = 0
             
     def move_up(self):
         if self.rect.top >(SCREEN_HEIGHT/2):
