@@ -1,6 +1,6 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, PLAYER_ONE, PLAYER_TWO
 from game.components.spaceship import Spaceship
 
 
@@ -15,7 +15,8 @@ class Game:
         self.game_speed = 10
         self.x_pos_bg = 0
         self.y_pos_bg = 0
-        self.player = Spaceship()
+        self.player_one = Spaceship(PLAYER_ONE)
+        self.player_two = Spaceship(PLAYER_TWO)
 
     def run(self):
         # Game loop: events - update - draw
@@ -34,13 +35,15 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)
+        self.player_one.update(user_input)
+        self.player_two.update(user_input)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
-        self.player.draw(self.screen)
+        self.player_one.draw(self.screen)
+        self.player_two.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
         
