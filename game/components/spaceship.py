@@ -4,7 +4,7 @@ from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, SPACESH
 class Spaceship:
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
-    def __init__(self,player_number):
+    def __init__(self,player_number, position):
         self.player= player_number
         if player_number:
             self.image = SPACESHIP
