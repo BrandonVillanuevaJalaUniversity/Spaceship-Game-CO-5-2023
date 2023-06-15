@@ -3,7 +3,7 @@ import pygame
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, PLAYER_ONE, PLAYER_TWO
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
-
+from game.components.bullet.bullet_handler import BulletHandler
 class Game:
     def __init__(self):
         pygame.init()
@@ -18,6 +18,7 @@ class Game:
         self.player_one = Spaceship(PLAYER_ONE)
         self.player_two = Spaceship(PLAYER_TWO)
         self.enemy_handler = EnemyHandler()
+        self.bullet_handler = BulletHandler()
         
 
     def run(self):
@@ -39,7 +40,13 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player_one.update(user_input)
         self.player_two.update(user_input)
-        self.enemy_handler.update()
+        self.enemy_handler.update(user_input,self.bullet_handler)
+        self.bullet_handler.update(self.player_one)
+        if not self.player_one.is_available:
+            pygame.time.delay(300)
+            self.playing = False
+
+
 
     def draw(self):
         self.clock.tick(FPS)
@@ -48,6 +55,7 @@ class Game:
         self.player_one.draw(self.screen)
         self.player_two.draw(self.screen)
         self.enemy_handler.draw(self.screen)
+        self.bullet_handler.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
         
