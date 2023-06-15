@@ -38,12 +38,11 @@ class Game:
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player_one.update(user_input)
-        self.player_two.update(user_input)
-        self.enemy_handler.update(user_input,self.bullet_handler)
-        self.bullet_handler.update(self.player_one)
-        if not self.player_one.is_available:
-            pygame.time.delay(300)
+        self.player_one.update(user_input, self.bullet_handler)
+        self.player_two.update(user_input, self.bullet_handler)
+        self.enemy_handler.update(user_input,self.bullet_handler, self.player_one, self.player_two)
+        self.bullet_handler.update(self.player_one,self.player_two, self.enemy_handler.enemies)
+        if not self.player_two.is_available and not self.player_one.is_available:
             self.playing = False
 
 
@@ -52,8 +51,10 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
-        self.player_one.draw(self.screen)
-        self.player_two.draw(self.screen)
+        if self.player_one.is_available:
+            self.player_one.draw(self.screen)
+        if self.player_two.is_available:
+            self.player_two.draw(self.screen)
         self.enemy_handler.draw(self.screen)
         self.bullet_handler.draw(self.screen)
         pygame.display.update()

@@ -2,25 +2,30 @@ from game.components.enemies.ship import Ship
 from game.components.enemies.ship2 import Ship2
 from game.components.enemies.marcian1 import Marcian_sp
 from game.components.enemies.meteor_image import Meteor
+from game.components.bullet.bullet_handler import BulletHandler
 
 import random, pygame
 
 class EnemyHandler:
+    DIFICULT_TIME = 1000
     def __init__(self):
+        self.dificult_time = 0
         self.enemies = []
         # self.enemies.append(Ship())
         # self.enemies.append(Ship2())
         self.enemies.append(Marcian_sp())
         # self.enemies.append(Meteor())
         
-    def update(self,user_input, bullet_handler):
+    def update(self,user_input, bullet_handler, player, player_two):
+        self.dificult_time += 1
+        self.enemy_cont = 4
         self.a = Marcian_sp()
         self.b = Ship2()
         self.c = Ship()
         self.d = Meteor()
         self.select_enemy =[self.a,self.b,self.c,self.d]
         for enemy in range(len(self.enemies)):
-            self.delete = self.enemies[enemy].update(bullet_handler)
+            self.delete = self.enemies[enemy].update(bullet_handler, player, player_two)
             if user_input[pygame.K_p]:
                 self.delete = True
                     
@@ -32,8 +37,11 @@ class EnemyHandler:
         self.add_enemy()
     
     def add_enemy(self):
-        if len(self.enemies) <4:
+        if self.dificult_time >= self.DIFICULT_TIME:
+            self.enemy_cont += 1
+        if len(self.enemies) <self.enemy_cont:
             self.enemies.append(random.choice(self.select_enemy))
+        self.dificult_time = 0
             
             
                 

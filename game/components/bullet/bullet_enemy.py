@@ -12,7 +12,10 @@ class BulletEnemy(Bullet):
         self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGTH))
         super().__init__(self.image, center)
         
-    def update(self, player):
+    def update(self, player, player_two, enemy):
         self.rect.y += self.SPEED
         if self.rect.colliderect(player.rect):
             player.is_available = False
+            
+        elif self.rect.colliderect(player_two.rect):
+            player_two.is_available = False

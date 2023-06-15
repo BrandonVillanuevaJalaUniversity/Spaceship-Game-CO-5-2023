@@ -5,7 +5,7 @@ class Meteor(Enemy):
     WIDTH = 60
     HEIGHT = 60
     SPEED_X = 5
-    SPEED_Y = 10
+    SPEED_Y = 20
     Y_POS = -30
     def __init__(self):
         self.image_white = METEOR_WHITE
