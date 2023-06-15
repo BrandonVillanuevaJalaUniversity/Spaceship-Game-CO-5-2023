@@ -2,8 +2,8 @@ from game.components.enemies.ship import Ship
 from game.components.enemies.ship2 import Ship2
 from game.components.enemies.marcian1 import Marcian_sp
 from game.components.enemies.meteor_image import Meteor
-from game.components.bullet.bullet_handler import BulletHandler
-
+from game.components.enemies.ovni_white1 import Boos_
+from game.components.enemies.boss import Boos
 import random, pygame
 
 class EnemyHandler:
@@ -19,11 +19,14 @@ class EnemyHandler:
     def update(self,user_input, bullet_handler, player, player_two):
         self.dificult_time += 1
         self.enemy_cont = 4
-        self.a = Marcian_sp()
-        self.b = Ship2()
-        self.c = Ship()
-        self.d = Meteor()
-        self.select_enemy =[self.a,self.b,self.c,self.d]
+        self.alien = Marcian_sp()
+        self.enemy2 = Ship2()
+        self.enemy = Ship()
+        self.meteor = Meteor()
+        self.white_ovni = Boos_()
+        self.boos = Boos()       
+        
+        self.select_enemy =[self.alien, self.enemy, self.enemy2, self.meteor, self.white_ovni, self.boos]
         for enemy in range(len(self.enemies)):
             self.delete = self.enemies[enemy].update(bullet_handler, player, player_two)
             if user_input[pygame.K_p]:
@@ -31,7 +34,6 @@ class EnemyHandler:
                     
             if self.delete:
                 del self.enemies[enemy]
-                print (self.a)
                 self.enemies.append(random.choice(self.select_enemy))
                 pygame.time.delay(1)
         self.add_enemy()

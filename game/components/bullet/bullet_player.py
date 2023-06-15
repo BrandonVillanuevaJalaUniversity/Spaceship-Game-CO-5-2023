@@ -16,4 +16,5 @@ class BulletPlayer(Bullet):
         self.rect.y -= self.SPEED
         for enemy in range(len(enemies)):
             if self.rect.colliderect(enemies[enemy].rect):
-                enemies[enemy].alives = True
+                enemies[enemy].lives -= 1
+                return True
