@@ -33,8 +33,15 @@ ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 METEOR_WHITE = pygame.image.load(os.path.join(IMG_DIR, "Enemy/meteoroBlanco.png"))
 METEOR_RED = pygame.image.load(os.path.join(IMG_DIR, "Enemy/meteoroRojo.png"))
 
+WHITE = (255,255,255)
+RED = (255, 0, 0)
+PINK = (255, 120, 122)
+
 
 FONT_STYLE = 'freesansbold.ttf'
 
 BULLET_ENEMY_TYPE = 'enemy'
 BULLET_PLAYER_TYPE = 'player'
+
+ENEMY_TYPE_NORMAL = 'normal'
+ENEMY_TYPE_BOOS = 'boos'

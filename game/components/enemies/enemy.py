@@ -10,7 +10,7 @@ class Enemy:
     INTERVAL = 100
     SHOOTING_TIME = 30
     
-    def __init__(self,image,speed_x,speed_y,Y_POS):
+    def __init__(self,image,speed_x,speed_y,Y_POS, enemy_type):
         self.SPEED_X = speed_x
         self.SPEED_Y = speed_y
         self.image = image
@@ -22,6 +22,7 @@ class Enemy:
         self.shooting_time = 0
         self.alives = False
         self.lives= 1
+        self.enemy_type = enemy_type
         
     def update(self, bullet_handler,player,player_two):
         self.rect.y += self.SPEED_Y

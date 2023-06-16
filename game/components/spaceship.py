@@ -4,7 +4,7 @@ from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, SPACESH
 class Spaceship:
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
-    SHOOTING_TIME = 30
+    SHOOTING_TIME = 1
     def __init__(self,player_number):
         self.player= player_number
         self.shooting_time = 0
@@ -17,10 +17,11 @@ class Spaceship:
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
-        self.is_available = True
+        self.is_available = False
         
     def update(self, user_input, bullet_handler):
         if self.is_available:
+            self.shooting_time += 1
             if self.player:
                 if user_input[pygame.K_LEFT]:
                     self.move_left()
@@ -71,3 +72,7 @@ class Spaceship:
         if self.shooting_time % self.SHOOTING_TIME == 0:
             bullet_handler.add_bullet(BULLET_PLAYER_TYPE ,self.rect.center)
             
+    def reset(self):
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
+        self.is_available = True

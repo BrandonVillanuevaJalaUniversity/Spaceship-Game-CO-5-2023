@@ -1,6 +1,6 @@
 import pygame 
 import random
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_ENEMY_TYPE
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_ENEMY_TYPE, ENEMY_TYPE_BOOS
 
 class Boos:
     X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
@@ -21,6 +21,7 @@ class Boos:
         self.shooting_time = 0
         self.alives = False
         self.lives= 10
+        self.enemy_type = ENEMY_TYPE_BOOS
         
     def update(self, bullet_handler,player,player_two):
         if self.lives <= 0:

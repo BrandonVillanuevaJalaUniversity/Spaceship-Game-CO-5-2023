@@ -1,6 +1,7 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, PLAYER_ONE, PLAYER_TWO
+from game.components import text_utils
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, PLAYER_ONE, PLAYER_TWO, WHITE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullet.bullet_handler import BulletHandler
@@ -12,9 +13,13 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
+        self.text_size = 30
+        self.running = True
         self.game_speed = 10
         self.x_pos_bg = 0
+        self.margin = True
         self.y_pos_bg = 0
+        self.number_death = 0
         self.player_one = Spaceship(PLAYER_ONE)
         self.player_two = Spaceship(PLAYER_TWO)
         self.enemy_handler = EnemyHandler()
@@ -23,8 +28,8 @@ class Game:
 
     def run(self):
         # Game loop: events - update - draw
-        self.playing = True
-        while self.playing:
+        self.running = True
+        while self.running:
             self.events()
             self.update()
             self.draw()
@@ -34,29 +39,45 @@ class Game:
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self.running = False
                 self.playing = False
+            elif event.type == pygame.KEYDOWN and not self.playing:
+                if event.key == pygame.K_1 or event.key == pygame.K_2:
+                    self.playing = True
+                    pygame.mixer.music.load("game/assets/soundtracks/into-the-cosmos.mp3")
+                    pygame.mixer.music.play(-1)
+                    pygame.mixer.music.set_volume(0.1)
+                    self.reset(event)
 
     def update(self):
-        user_input = pygame.key.get_pressed()
-        self.player_one.update(user_input, self.bullet_handler)
-        self.player_two.update(user_input, self.bullet_handler)
-        self.enemy_handler.update(user_input,self.bullet_handler, self.player_one, self.player_two)
-        self.bullet_handler.update(self.player_one,self.player_two, self.enemy_handler.enemies)
-        if not self.player_two.is_available and not self.player_one.is_available:
-            self.playing = False
-
-
+        if self.playing:
+            
+            self.score= self.enemy_handler.enemie_destroy
+            user_input = pygame.key.get_pressed()
+            self.player_one.update(user_input, self.bullet_handler)
+            self.player_two.update(user_input, self.bullet_handler)
+            self.enemy_handler.update(user_input,self.bullet_handler, self.player_one, self.player_two)
+            self.bullet_handler.update(self.player_one,self.player_two, self.enemy_handler.enemies)
+            if not self.player_two.is_available and not self.player_one.is_available:
+                self.playing = False
+                self.number_death +=1
+                pygame.mixer.music.load("game/assets/soundtracks/metal-slug-3-music-hq.mp3")
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.set_volume(0.1)
 
     def draw(self):
-        self.clock.tick(FPS)
-        self.screen.fill((255, 255, 255))
         self.draw_background()
-        if self.player_one.is_available:
-            self.player_one.draw(self.screen)
-        if self.player_two.is_available:
-            self.player_two.draw(self.screen)
-        self.enemy_handler.draw(self.screen)
-        self.bullet_handler.draw(self.screen)
+        if self.playing:
+            self.clock.tick(FPS)
+            if self.player_one.is_available:
+                self.player_one.draw(self.screen)
+            if self.player_two.is_available:
+                self.player_two.draw(self.screen)
+            self.enemy_handler.draw(self.screen)
+            self.bullet_handler.draw(self.screen)
+            self.draw_score()
+        else:
+            self.draw_menu()
         pygame.display.update()
         pygame.display.flip()
         
@@ -69,3 +90,38 @@ class Game:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+        
+    def draw_menu(self):
+        if self.number_death == 0:
+            if self.margin:
+                self.text_size += 3
+                if self.text_size >= 100:
+                    self.margin = False
+            elif self.margin == False:
+                self.text_size -= 3
+                if self.text_size <= 30:
+                    self.margin = True
+            title, title_rect = text_utils.get_message('THE NEO-SHIP', self.text_size, WHITE, SCREEN_WIDTH/2, 100)
+            text, text_rect = text_utils.get_message('press the number of players', 50, WHITE)
+            self.screen.blit(text, text_rect)
+            self.screen.blit(title, title_rect)
+                
+        else:
+            text, text_rect = text_utils.get_message('prees any key to start', 30, WHITE)
+            score, score_rect = text_utils.get_message(f'your score is: {self.score}', 30, WHITE, 500, 40)
+            self.screen.blit(text, text_rect)
+            self.screen.blit(score, score_rect)
+
+
+    def draw_score(self):
+        score, score_rect = text_utils.get_message(f'your score is: {self.score}', 30, WHITE, 0, 40)
+        self.screen.blit(score, score_rect)
+        
+    def reset(self, event):
+        if event.key == pygame.K_1:
+            self.player_one.reset()
+        if event.key == pygame.K_2:
+            self.player_one.reset()
+            self.player_two.reset()
+        self.enemy_handler.reset()
+        self.bullet_handler.reset()

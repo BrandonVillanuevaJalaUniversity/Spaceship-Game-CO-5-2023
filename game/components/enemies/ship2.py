@@ -1,5 +1,5 @@
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import ENEMY_2
+from game.utils.constants import ENEMY_2, ENEMY_TYPE_NORMAL
 import pygame
 class Ship2(Enemy):
     WIDTH = 40
@@ -8,7 +8,8 @@ class Ship2(Enemy):
     SPEED_Y = 5
     Y_POS = -50
     def __init__(self):
+        self.enemy_type = ENEMY_TYPE_NORMAL
         self.image = ENEMY_2
         self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT))
-        super().__init__(self.image,self.SPEED_X, self.SPEED_Y,self.Y_POS)
+        super().__init__(self.image,self.SPEED_X, self.SPEED_Y,self.Y_POS,self.enemy_type)
         
