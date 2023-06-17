@@ -3,7 +3,7 @@ from game.components.enemies.ship2 import Ship2
 from game.components.enemies.marcian1 import Marcian_sp
 from game.components.enemies.meteor_image import Meteor
 from game.components.enemies.boss import Boos
-from game.utils.constants import ENEMY_TYPE_BOOS, ENEMY_TYPE_NORMAL
+from game.utils.constants import ENEMY_TYPE_BOOS, ENEMY_TYPE_NORMAL, SCREEN_HEIGHT
 import random, pygame
 
 class EnemyHandler:
@@ -11,14 +11,16 @@ class EnemyHandler:
         self.boos_activate = False
         self.dificult_time = 500
         self.enemie_destroy = 0
+        self.power_random = 0
         self.enemies = []
+        self.enemy_destroyer = 0
         # self.enemies.append(Ship())
         # self.enemies.append(Ship2())
         self.enemies.append(Marcian_sp())
         # self.enemies.append(Meteor())
         
-    def update(self,user_input, bullet_handler, player, player_two):
-        self.enemy_cont = 3
+    def update(self,user_input, bullet_handler, player, player_two,powers,yes,enemy_cont):
+        self.enemy_cont = enemy_cont
         self.alien = Marcian_sp()
         self.enemy2 = Ship2()
         self.enemy = Ship()
@@ -32,8 +34,13 @@ class EnemyHandler:
                 self.delete = True
                     
             if self.delete:
-                if self.enemies[enemy].enemy_type == ENEMY_TYPE_NORMAL:
+                if self.enemies[enemy].enemy_type == ENEMY_TYPE_NORMAL and self.enemies[enemy].rect.bottom < SCREEN_HEIGHT:
                     self.enemie_destroy += 10
+                    self.power_random = random.randint(0,5)
+                    self.enemy_destroyer +=1                    
+                    if self.power_random == 5:
+                        powers.add_power(self.enemies[enemy].rect)
+                    
                 elif self.enemies[enemy].enemy_type == ENEMY_TYPE_BOOS:
                     self.enemie_destroy += 1000
                     self.dificult_time += 1000
@@ -41,23 +48,28 @@ class EnemyHandler:
                 del self.enemies[enemy]
                 self.enemies.append(random.choice(self.select_enemy))
                 pygame.time.delay(1)
-        self.add_enemy()
+        if yes:
+            self.add_enemy()
     
     def add_enemy(self):
         if self.enemie_destroy >= self.dificult_time:
-            self.enemy_cont += 1
+            self.dificult_time += 500
             if not self.boos_activate:
                 self.enemies.append(Boos())
                 self.boos_activate = True
         if len(self.enemies) <self.enemy_cont:
             self.enemies.append(random.choice(self.select_enemy))
+            
+    def add_enemie_background(self):
+        self.enemies.append(Marcian_sp())
         
     def reset(self):
         self.enemies = []
-        self.enemie_destroy = 0
+        self.enemie_destroy = 490
         self.enemy_cont = 3
         self.boos_activate = False
-            
+        self.enemy_destroyer = 0
+        self.dificult_time = 500
                 
     def draw(self, screen):
         for enemy in self.enemies:

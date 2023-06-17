@@ -16,11 +16,24 @@ class BulletEnemy(Bullet):
     def update(self, player, player_two, enemy):
         self.rect.y += self.SPEED
         if self.rect.colliderect(player.rect):
-            player.is_available = False
-            self.is_available = False
+            if not player.shiel_activate:
+                self.rect.top = 600
+                player.is_available = False
+                self.is_available = False
+            else:
+                player.shiel_activate = False
+                self.rect.top = 600
+                self.is_available = False
+                
             
         elif self.rect.colliderect(player_two.rect):
-            player_two.is_available = False
-            self.is_available = False
+            if not player_two.shiel_activate:
+                self.rect.top = 600
+                player_two.is_available = False
+                self.is_available = False
+            else:
+                player_two.shiel_activate = False
+                self.rect.top = 600
+                self.is_available = False
         if self.rect.top >= SCREEN_WIDTH:
             self.is_available = False

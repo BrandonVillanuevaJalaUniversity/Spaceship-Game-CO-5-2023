@@ -20,24 +20,15 @@ class Boos:
         self.direction = "left"
         self.shooting_time = 0
         self.alives = False
-        self.lives= 10
+        self.lives= 100
         self.enemy_type = ENEMY_TYPE_BOOS
         
     def update(self, bullet_handler,player,player_two):
         if self.lives <= 0:
             return True
         self.shooting_time +=1
-        if self.rect.top >= SCREEN_HEIGHT:
-            self.alives = True
-            return self.alives 
         self.move()
         self.shoot(bullet_handler)
-        
-        if self.rect.colliderect(player.rect):
-            player.is_available = False
-            
-        if self.rect.colliderect(player_two.rect):
-            player_two.is_available = False
             
         return self.alives
             
@@ -60,4 +51,4 @@ class Boos:
                 
     def shoot(self, bullet_handler):
         if self.shooting_time % self.SHOOTING_TIME == 0:
-            bullet_handler.add_bullet(BULLET_ENEMY_TYPE ,self.rect.center)
+            bullet_handler.add_boos_bullet(ENEMY_TYPE_BOOS ,self.rect.left, self.rect.center, self.rect.right)

@@ -4,9 +4,10 @@ from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, SPACESH
 class Spaceship:
     X_POS = (SCREEN_WIDTH // 2) - 40
     Y_POS = 500
-    SHOOTING_TIME = 1
+    SHOOTING_TIME = 2
     def __init__(self,player_number):
         self.player= player_number
+        self.player_number = player_number
         self.shooting_time = 0
         if player_number:
             self.image = SPACESHIP
@@ -18,9 +19,16 @@ class Spaceship:
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.is_available = False
+        self.shiel_activate= False
         
     def update(self, user_input, bullet_handler):
         if self.is_available:
+            if not self.shiel_activate:
+                if self.player_number:
+                    self.image = SPACESHIP  
+                else:
+                    self.image = SPACESHIP2
+            self.image = pygame.transform.scale(self.image,(40,60)) 
             self.shooting_time += 1
             if self.player:
                 if user_input[pygame.K_LEFT]:
@@ -44,7 +52,8 @@ class Spaceship:
                     self.move_down()
                 elif user_input[pygame.K_f]:
                     self.shoot(bullet_handler)
-        
+        else:
+            self.rect.x = -50
     def draw(self,screen):
         screen.blit(self.image, self.rect)
         
@@ -76,3 +85,4 @@ class Spaceship:
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.is_available = True
+        self.shiel_activate = False

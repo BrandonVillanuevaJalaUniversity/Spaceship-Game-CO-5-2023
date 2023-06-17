@@ -20,10 +20,11 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
 
+GAME_OVER = pygame.image.load(os.path.join(IMG_DIR, "background/game_over.png"))
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP2 = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship2.png"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))
-SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield2.png"))
+SPACESHIP_SHIELD2 = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield2.png"))
 BULLET = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_3.png"))
 BOOS = pygame.image.load(os.path.join(IMG_DIR, "Enemy/BOOS.png"))
 
@@ -36,8 +37,10 @@ METEOR_RED = pygame.image.load(os.path.join(IMG_DIR, "Enemy/meteoroRojo.png"))
 WHITE = (255,255,255)
 RED = (255, 0, 0)
 PINK = (255, 120, 122)
+BLACK = (0, 0, 0)
 
-
+PLAYER_TWO_CONTROLLERS = pygame.image.load(os.path.join(IMG_DIR, "background/player2.png"))
+PLAYER_ONE_CONTROLLERS = pygame.image.load(os.path.join(IMG_DIR, "background/player1.png"))
 FONT_STYLE = 'freesansbold.ttf'
 
 BULLET_ENEMY_TYPE = 'enemy'

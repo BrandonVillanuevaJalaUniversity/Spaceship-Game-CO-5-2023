@@ -18,5 +18,6 @@ class BulletPlayer(Bullet):
         for enemy in range(len(enemies)):
             if self.rect.colliderect(enemies[enemy].rect):
                 enemies[enemy].lives -= 1
+                self.rect.bottom = -50
                 self.is_available = False
                 return True
