@@ -14,6 +14,7 @@ class EnemyHandler:
         self.power_random = 0
         self.enemies = []
         self.enemy_destroyer = 0
+        self.level = 1
         # self.enemies.append(Ship())
         # self.enemies.append(Ship2())
         self.enemies.append(Marcian_sp())
@@ -42,10 +43,11 @@ class EnemyHandler:
                     self.enemy_destroyer +=1                    
                     if self.power_random == 5:
                         powers.add_power(self.enemies[enemy].rect,HEAVY_TYPE)
-                    elif self.power_random == 7:
+                    elif self.power_random == 7 and player.lives <3:
                          powers.add_power(self.enemies[enemy].rect,SHIELD_TYPE)
                     
                 elif self.enemies[enemy].enemy_type == ENEMY_TYPE_BOOS:
+                    self.level += 1
                     self.enemie_destroy += 1000
                     self.dificult_time += 1000
                     self.boos_activate = False
@@ -69,7 +71,8 @@ class EnemyHandler:
         
     def reset(self):
         self.enemies = []
-        self.enemie_destroy = 400
+        self.level = 1
+        self.enemie_destroy = 490
         self.enemy_cont = 3
         self.boos_activate = False
         self.enemy_destroyer = 0

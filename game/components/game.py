@@ -90,6 +90,8 @@ class Game:
     def draw(self):
         self.draw_background()
         if self.playing:
+            level, level_rect = text_utils.get_message(f'Level:  {self.enemy_handler.level} ', 40, WHITE, SCREEN_WIDTH //2, 40)
+            self.screen.blit(level, level_rect)
             self.clock.tick(FPS)
             if self.player_one.is_available:
                 self.player_one.draw(self.screen)
