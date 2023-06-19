@@ -65,7 +65,7 @@ class Game:
                     self.back = True
                     self.reset(event)
 
-    def update(self):
+    def update(self):                
         if self.playing:
             self.score= self.enemy_handler.enemie_destroy
             self.enemy_destroyer = self.enemy_handler.enemy_destroyer
@@ -78,6 +78,7 @@ class Game:
             self.bullet_handler.update(self.player_one,self.player_two, self.enemy_handler.enemies)
             self.power_handler.update(self.player_one,self.player_two)
             if not self.player_two.is_available and not self.player_one.is_available:
+                pygame.time.wait(1000)
                 self.playing = False
                 self.number_death +=1
                 pygame.mixer.music.load("game/assets/soundtracks/metal-slug-3-music-hq.mp3")
@@ -172,6 +173,7 @@ class Game:
     def reset(self, event):
         if event.key == pygame.K_1:
             self.player_one.reset()
+            self.player_two.rect.topleft = (1000,-100)
         if event.key == pygame.K_2:
             self.player_one.reset()
             self.player_two.reset()

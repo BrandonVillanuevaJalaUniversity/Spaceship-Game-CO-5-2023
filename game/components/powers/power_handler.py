@@ -21,12 +21,14 @@ class PowerHandler:
                         player.image = HEAVY
                         player.image = pygame.transform.scale(player.image,(50,60))
                         player.shiel_activate = True
-                        self.powers[power].rect.y = 600
+                        self.powers[power].rect.top = 1000
+                        self.powers[power].position = "STOP"
                         self.powers[power].is_available = False          
                         player.heavym += 70   
                         self.HEAVY.play()
                     elif self.powers[power].type == SHIELD_TYPE:
-                        self.powers[power].rect.y = 600
+                        self.powers[power].rect.top = 1000
+                        self.powers[power].position = "STOP"
                         if player.lives <3 and player.lives > 0:
                             player.lives += 1
                         self.powers[power].is_available = False                        
@@ -37,13 +39,15 @@ class PowerHandler:
                         player_two.image = HEAVY1
                         player_two.image = pygame.transform.scale(player_two.image,(40,60))
                         player_two.shiel_activate = True
-                        self.powers[power].rect.y = 600
+                        self.powers[power].rect.top = 1000
+                        self.powers[power].position = "STOP"
                         self.HEAVY.play()
                         self.powers[power].is_available = False                        
                         player_two.heavym += 70       
                         
                     elif self.powers[power].type == SHIELD_TYPE:
-                        self.powers[power].rect.y = 600
+                        self.powers[power].rect.top = 1000
+                        self.powers[power].position = "STOP"
                         if player_two.lives <3 and player_two.lives > 0:
                             player_two.lives += 1
                         self.powers[power].is_available = False                        

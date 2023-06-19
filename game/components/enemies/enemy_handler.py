@@ -69,7 +69,7 @@ class EnemyHandler:
         
     def reset(self):
         self.enemies = []
-        self.enemie_destroy = 0
+        self.enemie_destroy = 400
         self.enemy_cont = 3
         self.boos_activate = False
         self.enemy_destroyer = 0

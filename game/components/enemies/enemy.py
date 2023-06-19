@@ -36,10 +36,13 @@ class Enemy:
         if self.lives <= 0:
             return True
         if self.rect.colliderect(player.rect):
-            player.is_available = False
+            player.lives -= 1
+            self.alives = True
             
         if self.rect.colliderect(player_two.rect):
-            player_two.is_available = False
+            player_two.lives -= 1
+            self.alives = True
+            
             
         return self.alives
             
