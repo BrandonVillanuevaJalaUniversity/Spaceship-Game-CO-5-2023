@@ -1,4 +1,4 @@
-# Spaceship-Game-CO-5-2023
+# The Neo-Spaceship
 
 This program consists of an attempt to recreate the retro metal slug video game based on the final mission scenario 2.
 Taking the game as a reference, the program tries to use sprites and soundtracks to simulate said mission.
