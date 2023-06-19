@@ -3,7 +3,7 @@ from game.components.enemies.ship2 import Ship2
 from game.components.enemies.marcian1 import Marcian_sp
 from game.components.enemies.meteor_image import Meteor
 from game.components.enemies.boss import Boos
-from game.utils.constants import ENEMY_TYPE_BOOS, ENEMY_TYPE_NORMAL, SCREEN_HEIGHT
+from game.utils.constants import ENEMY_TYPE_BOOS, ENEMY_TYPE_NORMAL, SCREEN_HEIGHT, HEAVY_TYPE, SHIELD_TYPE
 import random, pygame
 
 class EnemyHandler:
@@ -18,6 +18,7 @@ class EnemyHandler:
         # self.enemies.append(Ship2())
         self.enemies.append(Marcian_sp())
         # self.enemies.append(Meteor())
+        self.ok = pygame.mixer.Sound("game/assets/soundtracks/audio_explosion.mp3") 
         
     def update(self,user_input, bullet_handler, player, player_two,powers,yes,enemy_cont):
         self.enemy_cont = enemy_cont
@@ -35,11 +36,14 @@ class EnemyHandler:
                     
             if self.delete:
                 if self.enemies[enemy].enemy_type == ENEMY_TYPE_NORMAL and self.enemies[enemy].rect.bottom < SCREEN_HEIGHT:
+                    self.ok.play()
                     self.enemie_destroy += 10
-                    self.power_random = random.randint(0,5)
+                    self.power_random = random.randint(0,10)
                     self.enemy_destroyer +=1                    
                     if self.power_random == 5:
-                        powers.add_power(self.enemies[enemy].rect)
+                        powers.add_power(self.enemies[enemy].rect,HEAVY_TYPE)
+                    elif self.power_random == 7:
+                         powers.add_power(self.enemies[enemy].rect,SHIELD_TYPE)
                     
                 elif self.enemies[enemy].enemy_type == ENEMY_TYPE_BOOS:
                     self.enemie_destroy += 1000
@@ -65,7 +69,7 @@ class EnemyHandler:
         
     def reset(self):
         self.enemies = []
-        self.enemie_destroy = 490
+        self.enemie_destroy = 0
         self.enemy_cont = 3
         self.boos_activate = False
         self.enemy_destroyer = 0

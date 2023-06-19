@@ -1,6 +1,7 @@
 from game.components.bullet.bullet_enemy import BulletEnemy
 from game.components.bullet.bullet_player import BulletPlayer
 from game.components.bullet.boos_controller import BulletCenter, BulletLeft, BulletRigth
+from game.components.bullet.hevy import HeavyLeft, HeavyRigth
 from game.utils.constants import BULLET_ENEMY_TYPE, BULLET_PLAYER_TYPE, ENEMY_TYPE_BOOS
 
 class BulletHandler:
@@ -27,5 +28,10 @@ class BulletHandler:
             self.bullets.append(BulletLeft(left))
             self.bullets.append(BulletCenter(center))
             self.bullets.append(BulletRigth(rigth))
+            
+    def add_heavy(self,type, left, rigth, top):
+        self.bullets.append(HeavyLeft(left, top))
+        self.bullets.append(HeavyRigth(rigth, top))
+    
     def reset(self):
         self.bullets = []

@@ -5,7 +5,7 @@ import pygame
 class BulletPlayer(Bullet):
     WIDTH = 9
     HEIGTH = 32
-    SPEED = 20
+    SPEED = 40
     
     def __init__(self,center):
         self.image = BULLET

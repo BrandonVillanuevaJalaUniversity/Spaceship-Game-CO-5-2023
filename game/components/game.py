@@ -18,7 +18,7 @@ class Game:
         self.playing = False
         self.player_two_controllers = pygame.transform.scale(PLAYER_TWO_CONTROLLERS, (280, 148))
         self.player_one_controllers = pygame.transform.scale(PLAYER_ONE_CONTROLLERS, (280, 148))
-        self.spaceship = pygame.transform.scale(SPACESHIP, (40, 60))
+        self.spaceship = pygame.transform.scale(SPACESHIP, (50, 60))
         self.text_size = 30
         self.dificult_time = 500
         self.running = True
@@ -39,6 +39,9 @@ class Game:
 
     def run(self):
         # Game loop: events - update - draw
+        pygame.mixer.music.load("game/assets/soundtracks/neo-geo-intro.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(1.0)
         self.running = True
         while self.running:
             self.events()
@@ -58,7 +61,7 @@ class Game:
                     self.enemy_cont = 4
                     pygame.mixer.music.load("game/assets/soundtracks/into-the-cosmos.mp3")
                     pygame.mixer.music.play(-1)
-                    pygame.mixer.music.set_volume(0.1)
+                    pygame.mixer.music.set_volume(1.0)
                     self.back = True
                     self.reset(event)
 
@@ -77,11 +80,9 @@ class Game:
             if not self.player_two.is_available and not self.player_one.is_available:
                 self.playing = False
                 self.number_death +=1
-                # self.otro= pygame.mixer.Sound("game/assets/soundtracks/metal-slug-3-music-hq.mp3") 
-                # self.otro.play()
                 pygame.mixer.music.load("game/assets/soundtracks/metal-slug-3-music-hq.mp3")
                 pygame.mixer.music.play(-1)
-                pygame.mixer.music.set_volume(0.1)
+                pygame.mixer.music.set_volume(1.0)
             if self.score >= self.enemy_handler.dificult_time:
                 self.enemy_cont += 1
 
@@ -158,6 +159,14 @@ class Game:
 
     def draw_score(self):
         score, score_rect = text_utils.get_message(f'score: {self.score}', 30, WHITE, 100, 40)
+        arm, arm_rect = text_utils.get_message('Arm:', 30, WHITE, 60, 80)
+        arm1, arm_rect1 = text_utils.get_message(f' {self.player_one.heavym} ', 30, WHITE, 150, 80)
+        arm2, arm_rect2 = text_utils.get_message('Arm:', 30, WHITE, 60, 120)
+        arm3, arm_rect3 = text_utils.get_message(f' {self.player_two.heavym} ', 30, WHITE, 150, 120)
+        self.screen.blit(arm, arm_rect)
+        self.screen.blit(arm1, arm_rect1)
+        self.screen.blit(arm2, arm_rect2)
+        self.screen.blit(arm3, arm_rect3)
         self.screen.blit(score, score_rect)
         
     def reset(self, event):

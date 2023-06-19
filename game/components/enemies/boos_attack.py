@@ -1,6 +1,6 @@
 import pygame 
 import random
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_ENEMY_TYPE, ENEMY_TYPE_BOOS
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET_ENEMY_TYPE, ENEMY_TYPE_BOOS, GREEN
 
 class Boos:
     X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
@@ -20,7 +20,7 @@ class Boos:
         self.direction = "left"
         self.shooting_time = 0
         self.alives = False
-        self.lives= 100
+        self.lives= 200
         self.enemy_type = ENEMY_TYPE_BOOS
         
     def update(self, bullet_handler,player,player_two):
@@ -33,6 +33,7 @@ class Boos:
         return self.alives
             
     def draw(self,screen):
+        pygame.draw.line(screen, GREEN, (275, 560), ((275 + (self.lives*3)) ,560), 20)
         screen.blit(self.image, self.rect)
         
     def move(self):

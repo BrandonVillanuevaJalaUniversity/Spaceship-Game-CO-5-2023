@@ -18,7 +18,8 @@ class BulletEnemy(Bullet):
         if self.rect.colliderect(player.rect):
             if not player.shiel_activate:
                 self.rect.top = 600
-                player.is_available = False
+                pygame.time.delay(10)
+                player.lives -= 1
                 self.is_available = False
             else:
                 player.shiel_activate = False
@@ -29,7 +30,7 @@ class BulletEnemy(Bullet):
         elif self.rect.colliderect(player_two.rect):
             if not player_two.shiel_activate:
                 self.rect.top = 600
-                player_two.is_available = False
+                player_two.lives -= 1
                 self.is_available = False
             else:
                 player_two.shiel_activate = False

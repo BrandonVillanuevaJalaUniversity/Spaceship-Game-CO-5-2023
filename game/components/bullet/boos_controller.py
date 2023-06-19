@@ -1,13 +1,13 @@
-from game.utils.constants import BULLET, SCREEN_WIDTH
+from game.utils.constants import BULLET, SCREEN_WIDTH, DRAGON_DOWN
 import pygame
 
 class BulletLeft:
-    WIDTH = 9
-    HEIGTH = 32
+    DRAGON_DOWN_WHIDTH = 40
+    DRAGON_DOWN_HEIGTH = 210
     SPEED = 20
     def __init__(self,left):
-        self.image = BULLET
-        self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGTH))
+        self.image = DRAGON_DOWN
+        self.image = pygame.transform.scale(self.image, (self.DRAGON_DOWN_WHIDTH, self.DRAGON_DOWN_HEIGTH))
         self.is_available = True
         self.rect = self.image.get_rect()
         self.rect.left = left
@@ -18,22 +18,18 @@ class BulletLeft:
             if not player.shiel_activate:
                 self.rect.top = 600
                 player.is_available = False
-                self.is_available = False
             else:
                 player.shiel_activate = False
                 self.rect.top = 600
-                self.is_available = False
                 
             
         elif self.rect.colliderect(player_two.rect):
             if not player_two.shiel_activate:
                 self.rect.top = 600
                 player_two.is_available = False
-                self.is_available = False
             else:
                 player_two.shiel_activate = False
                 self.rect.top = 600
-                self.is_available = False
         if self.rect.top >= SCREEN_WIDTH:
             self.is_available = False
     
@@ -41,12 +37,12 @@ class BulletLeft:
         screen.blit(self.image,self.rect)
 #---------------------------------------------------------------------------------
 class BulletRigth:
-    WIDTH = 9
-    HEIGTH = 32
-    SPEED = 20
+    SPEED = 20    
+    DRAGON_DOWN_WHIDTH = 40
+    DRAGON_DOWN_HEIGTH = 210
     def __init__(self,right):
-        self.image = BULLET
-        self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGTH))
+        self.image = DRAGON_DOWN
+        self.image = pygame.transform.scale(self.image, (self.DRAGON_DOWN_WHIDTH, self.DRAGON_DOWN_HEIGTH))
         self.is_available = True
         self.rect = self.image.get_rect()
         self.rect.right = right
@@ -57,22 +53,19 @@ class BulletRigth:
             if not player.shiel_activate:
                 self.rect.top = 600
                 player.is_available = False
-                self.is_available = False
             else:
                 player.shiel_activate = False
                 self.rect.top = 600
-                self.is_available = False
                 
             
         elif self.rect.colliderect(player_two.rect):
             if not player_two.shiel_activate:
                 self.rect.top = 600
                 player_two.is_available = False
-                self.is_available = False
             else:
                 player_two.shiel_activate = False
                 self.rect.top = 600
-                self.is_available = False
+                
         if self.rect.top >= SCREEN_WIDTH:
             self.is_available = False
     

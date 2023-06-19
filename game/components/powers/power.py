@@ -2,8 +2,8 @@ import pygame, random
 from game.utils.constants import SCREEN_WIDTH
 
 class Power:
-    POWER_WIDTH= 30
-    POWER_HEIGTH = 30
+    POWER_WIDTH= 40
+    POWER_HEIGTH = 40
     POWER_SPEED = 10
     
     def __init__(self, image, type,rect):
